@@ -2,9 +2,12 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime
 
+import os
+
 app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_demo'
-DB_NAME = 'electricity.db'
+# Use environment variable for DB path, default to local file
+DB_NAME = os.environ.get('DB_PATH', 'electricity.db')
 
 def get_db_connection():
     conn = sqlite3.connect(DB_NAME)

@@ -7,5 +7,7 @@ services:
       - "5001:5001"
     volumes:
       - .:/app
+      - ./data:/data
     environment:
       - FLASK_ENV=development
+      - DB_PATH=/data/electricity.db
