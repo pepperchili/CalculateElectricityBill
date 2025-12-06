@@ -211,6 +211,7 @@ tr:last-child td {
     background-color: var(--primary-50);
     padding: 4px 8px;
     border-radius: 6px;
+    margin-bottom: 8px;
 }
 
 .highlight-neighbor {
@@ -359,11 +360,6 @@ pre {
         border-bottom: 1px dashed var(--slate-200);
     }
 
-    /* Ensure Month row doesn't overlap with delete button */
-    td[data-label="月份"] {
-        padding-right: 60px;
-    }
-
     td:last-child {
         border-bottom: none;
         padding-bottom: 0;
@@ -381,14 +377,45 @@ pre {
     td[data-label="操作"] {
         position: static;
         width: 100%;
+        display: block;
+        /* Changed to block to let details flow naturally */
+        padding: 0 0 4px 0;
+        border: none;
+        margin-top: 0;
+    }
+
+    /* Position the delete form absolutely to the top-right of the card (tr) */
+    .delete-form {
+        top: 12px;
+        right: 12px;
+        margin: 0;
+        z-index: 10;
+    }
+
+    .btn-delete-x {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: var(--slate-100);
+        color: var(--text-muted);
+        border: none;
+        font-size: 20px;
+        line-height: 1;
         display: flex;
-        flex-wrap: wrap;
-        /* Allow wrapping for details */
-        justify-content: flex-end;
-        padding: 12px 0 4px 0;
-        border-top: none;
-        margin-top: 4px;
-        border-bottom: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        /* Visual adjustment for &times; alignment */
+    }
+
+    .btn-delete-x:hover {
+        background-color: var(--danger-color);
+        color: white;
+    }
+
+    td[data-label="操作"]::before {
+        display: none;
     }
 
     td[data-label="操作"] form {
@@ -412,10 +439,6 @@ pre {
         background-color: var(--danger-color);
         color: white;
         border-color: var(--danger-color);
-    }
-
-    td[data-label="操作"]::before {
-        display: none;
     }
 
     /* Embedded Details */

@@ -49,6 +49,12 @@
             {% for record in records %}
             <tbody class="record-group">
                 <tr>
+                    <td data-label="操作">
+                        <form action="{{ url_for('delete', id=record['id']) }}" method="post"
+                            onsubmit="return confirm('确定删除吗？');" class="delete-form">
+                            <button type="submit" class="btn-delete-x" aria-label="删除">&times;</button>
+                        </form>
+                    </td>
                     <td data-label="月份">{{ record['billing_month'] }}</td>
                     <td data-label="电表读数">{{ record['meter_reading'] }}</td>
                     <td data-label="用电量">
@@ -62,13 +68,7 @@
                     <td data-label="506应付" class="highlight-user">¥{{ "%.2f"|format(record['user_cost']) }}</td>
                     <td data-label="507应付" class="highlight-neighbor">¥{{ "%.2f"|format(record['neighbor_cost']|abs) }}
                     </td>
-                    <td data-label="操作" class="action-cell">
-                        <form action="{{ url_for('delete', id=record['id']) }}" method="post"
-                            onsubmit="return confirm('确定删除吗？');">
-                            <button type="submit" class="btn-icon">删除</button>
-                        </form>
 
-                    </td>
                     <td colspan="7">
                         {% if record['calculation_note'] and record['usage'] > 0 %}
                         <details class="embedded-details">
