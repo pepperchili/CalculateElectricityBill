@@ -92,25 +92,54 @@ def index():
         
         if last_record:
             prev_reading = last_record['meter_reading']
+            prev_month_str = last_record['billing_month']
             usage = meter_reading - prev_reading
+            
+            # Calculate month gap
+            try:
+                curr_date = datetime.strptime(billing_month, '%Y-%m')
+                prev_date = datetime.strptime(prev_month_str, '%Y-%m')
+                # Calculate difference in months
+                months_diff = (curr_date.year - prev_date.year) * 12 + (curr_date.month - prev_date.month)
+                
+                if months_diff < 1:
+                    months_diff = 1 # Fallback if same month or error
+            except:
+                months_diff = 1
         else:
-            # First entry, assume usage is 0 or user just wants to record the start
+            # First entry
             usage = 0
+            months_diff = 1
             
         if usage < 0:
             flash("错误：当前读数不能小于上月读数！")
         else:
             # Calculate User Cost
-            user_cost, note = calculate_tier_cost(usage, billing_month)
-            
-            # Calculate Neighbor Cost (Total - User)
-            # If usage is 0 (initial setup), costs are 0
             if usage == 0:
                 user_cost = 0
                 neighbor_cost = 0
                 note = "初始读数，无用量"
             else:
+                # Average usage per month to avoid unfair tier jumping
+                avg_usage = usage / months_diff
+                
+                # Calculate cost for ONE month based on average usage
+                # Note: This assumes the season standard of the CURRENT month applies to the whole period
+                # or we could try to be fancy and calculate per month, but user asked for "usage/2" logic.
+                monthly_cost, monthly_note = calculate_tier_cost(avg_usage, billing_month)
+                
+                user_cost = monthly_cost * months_diff
                 neighbor_cost = total_bill - user_cost
+                
+                if months_diff > 1:
+                    note = f"跨度 {months_diff} 个月 (上次抄表: {prev_month_str})\n"
+                    note += f"总用量 {usage:.2f} ÷ {months_diff} = 平均每月 {avg_usage:.2f} 度\n"
+                    note += "-" * 20 + "\n"
+                    note += f"单月计算:\n{monthly_note}\n"
+                    note += "-" * 20 + "\n"
+                    note += f"总费用: {monthly_cost:.2f}元 × {months_diff}个月 = {user_cost:.2f}元"
+                else:
+                    note = monthly_note
 
             conn.execute('INSERT INTO records (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, calculation_note) VALUES (?, ?, ?, ?, ?, ?, ?)',
                          (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, note))
