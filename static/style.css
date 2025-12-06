@@ -308,16 +308,38 @@ pre {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0;
+        box-sizing: border-box !important;
+        /* Force box-sizing */
+    }
+
+    /* Specific fix for iOS date/month inputs */
+    input[type="month"],
+    input[type="date"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        /* Force white background */
     }
 
     /* Reduce padding for details */
     details {
-        padding: 4px 0;
+        padding: 0;
+        /* Remove vertical padding completely */
+        margin-top: 4px;
+    }
+
+    summary {
+        padding: 8px 0;
+        /* Add touch target to summary instead */
     }
 
     pre {
         padding: 8px;
-        margin: 4px 0 0 0;
+        margin: 0;
         font-size: 0.75rem;
+        white-space: pre-wrap;
+        /* Ensure text wraps */
+        word-break: break-all;
+        /* Force break if necessary */
     }
 }
