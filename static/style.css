@@ -297,4 +297,20 @@ pre {
     .detail-row td::before {
         display: none;
     }
+
+    /* Fix overflow for inputs */
+    input {
+        max-width: 100%;
+    }
+
+    /* Reduce padding for details */
+    details {
+        padding: 8px 0;
+    }
+
+    pre {
+        padding: 8px;
+        margin-top: 5px;
+        font-size: 0.8rem;
+    }
 }
