@@ -10,6 +10,10 @@
     --danger-color: #ef4444;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--bg-color);
@@ -214,10 +218,11 @@ pre {
 @media (max-width: 600px) {
     body {
         padding: 10px;
+        overflow-x: hidden;
     }
 
     .card {
-        padding: 16px;
+        padding: 12px;
         border-radius: 12px;
     }
 
@@ -300,17 +305,19 @@ pre {
 
     /* Fix overflow for inputs */
     input {
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0;
     }
 
     /* Reduce padding for details */
     details {
-        padding: 8px 0;
+        padding: 4px 0;
     }
 
     pre {
         padding: 8px;
-        margin-top: 5px;
-        font-size: 0.8rem;
+        margin: 4px 0 0 0;
+        font-size: 0.75rem;
     }
 }
