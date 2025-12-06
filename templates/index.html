@@ -26,7 +26,7 @@
             <input type="number" step="0.01" id="total_bill" name="total_bill" required placeholder="例如: 136.56">
         </div>
 
-        <button type="submit" class="btn-primary">计算并保存</button>
+        <button type="submit" class="btn-primary">开始计算</button>
     </form>
 </section>
 
@@ -49,13 +49,13 @@
             {% for record in records %}
             <tbody class="record-group">
                 <tr>
-                    <td data-label="操作">
+                    <td data-label="操作" class="header-cell">
+                        <span class="month-title">{{ record['billing_month'] }}</span>
                         <form action="{{ url_for('delete', id=record['id']) }}" method="post"
                             onsubmit="return confirm('确定删除吗？');" class="delete-form">
                             <button type="submit" class="btn-delete-x" aria-label="删除">&times;</button>
                         </form>
                     </td>
-                    <td data-label="月份">{{ record['billing_month'] }}</td>
                     <td data-label="电表读数">{{ record['meter_reading'] }}度</td>
                     <td data-label="用电量">
                         {% if record['usage'] == 0 %}

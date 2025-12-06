@@ -374,22 +374,29 @@ pre {
     }
 
     /* Special handling for delete button: Bottom Right */
+    /* Header Cell (Month + Delete) */
     td[data-label="操作"] {
         position: static;
         width: 100%;
-        display: block;
-        /* Changed to block to let details flow naturally */
-        padding: 0 0 4px 0;
-        border: none;
-        margin-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--slate-100);
     }
 
-    /* Position the delete form absolutely to the top-right of the card (tr) */
+    .month-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--slate-900);
+        white-space: nowrap;
+        /* Prevent wrapping */
+    }
+
+    /* Position the delete form */
     .delete-form {
-        top: 12px;
-        right: 12px;
+        position: static;
+        /* Reset absolute, use flex */
         margin: 0;
-        z-index: 10;
     }
 
     .btn-delete-x {
@@ -406,6 +413,7 @@ pre {
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
+        padding-bottom: 2px;
         /* Visual adjustment for &times; alignment */
     }
 
