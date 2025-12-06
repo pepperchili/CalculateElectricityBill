@@ -56,12 +56,12 @@
                         </form>
                     </td>
                     <td data-label="月份">{{ record['billing_month'] }}</td>
-                    <td data-label="电表读数">{{ record['meter_reading'] }}</td>
+                    <td data-label="电表读数">{{ record['meter_reading'] }}度</td>
                     <td data-label="用电量">
                         {% if record['usage'] == 0 %}
                         <span class="badge-neutral">初始</span>
                         {% else %}
-                        {{ "%.2f"|format(record['usage']) }}
+                        {{ "%.2f"|format(record['usage']) }}度
                         {% endif %}
                     </td>
                     <td data-label="总电费">¥{{ "%.2f"|format(record['total_bill']) }}</td>
@@ -71,8 +71,8 @@
 
                     <td colspan="7">
                         {% if record['calculation_note'] and record['usage'] > 0 %}
-                        <details class="embedded-details">
-                            <summary>查看计算详情</summary>
+                        <details class="embedded-details" open>
+                            <summary>计算公式</summary>
                             <pre>{{ record['calculation_note'] }}</pre>
                         </details>
                         {% endif %}

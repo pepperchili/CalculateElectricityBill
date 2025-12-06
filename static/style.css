@@ -451,7 +451,7 @@ pre {
     .embedded-details summary {
         text-align: left;
         padding: 8px 0;
-        color: var(--primary-600);
+        color: #4e46e5;
         font-size: 0.85rem;
     }
 
