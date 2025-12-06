@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card input-section">
+    <h2>📝 录入新账单</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="billing_month">月份</label>
+            <input type="month" id="billing_month" name="billing_month" required value="{{ now_month }}">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>上月读数</label>
+                <input type="text" value="{{ prev_reading }}" disabled class="disabled-input">
+            </div>
+            <div class="form-group">
+                <label for="meter_reading">本月读数</label>
+                <input type="number" step="0.01" id="meter_reading" name="meter_reading" required
+                    placeholder="例如: 1229.86">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="total_bill">支付宝缴纳总金额 (元)</label>
+            <input type="number" step="0.01" id="total_bill" name="total_bill" required placeholder="例如: 136.56">
+        </div>
+
+        <button type="submit" class="btn-primary">计算并保存</button>
+    </form>
+</section>
+
+<section class="history-section">
+    <h2>📊 历史记录</h2>
+    {% if records %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>月份</th>
+                    <th>读数</th>
+                    <th>用量</th>
+                    <th>总金额</th>
+                    <th>我应付</th>
+                    <th>邻居应付</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record['billing_month'] }}</td>
+                    <td>{{ record['meter_reading'] }}</td>
+                    <td>
+                        {% if record['usage'] == 0 %}
+                        <span class="badge-neutral">初始</span>
+                        {% else %}
+                        {{ "%.2f"|format(record['usage']) }}
+                        {% endif %}
+                    </td>
+                    <td>¥{{ "%.2f"|format(record['total_bill']) }}</td>
+                    <td class="highlight-user">¥{{ "%.2f"|format(record['user_cost']) }}</td>
+                    <td class="highlight-neighbor">¥{{ "%.2f"|format(record['neighbor_cost']) }}</td>
+                    <td>
+                        <form action="{{ url_for('delete', id=record['id']) }}" method="post"
+                            onsubmit="return confirm('确定删除吗？');">
+                            <button type="submit" class="btn-icon">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% if record['calculation_note'] and record['usage'] > 0 %}
+                <tr class="detail-row">
+                    <td colspan="7">
+                        <details>
+                            <summary>查看计算详情</summary>
+                            <pre>{{ record['calculation_note'] }}</pre>
+                        </details>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>暂无记录，请录入第一笔数据（初始读数）。</p>
+    </div>
+    {% endif %}
+</section>
+
+<script>
+    // Set default month to current month
+    document.addEventListener('DOMContentLoaded', function () {
+        const date = new Date();
+        const monthStr = date.toISOString().slice(0, 7);
+        const input = document.getElementById('billing_month');
+        if (!input.value) {
+            input.value = monthStr;
+        }
+    });
+</script>
+{% endblock %}
