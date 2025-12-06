@@ -46,8 +46,8 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for record in records %}
+            {% for record in records %}
+            <tbody class="record-group">
                 <tr>
                     <td data-label="月份">{{ record['billing_month'] }}</td>
                     <td data-label="电表读数">{{ record['meter_reading'] }}</td>
@@ -62,25 +62,24 @@
                     <td data-label="506应付" class="highlight-user">¥{{ "%.2f"|format(record['user_cost']) }}</td>
                     <td data-label="507应付" class="highlight-neighbor">¥{{ "%.2f"|format(record['neighbor_cost']|abs) }}
                     </td>
-                    <td data-label="操作">
+                    <td data-label="操作" class="action-cell">
                         <form action="{{ url_for('delete', id=record['id']) }}" method="post"
                             onsubmit="return confirm('确定删除吗？');">
-                            <button type="submit" class="btn-icon">🗑️</button>
+                            <button type="submit" class="btn-icon">删除</button>
                         </form>
+
                     </td>
-                </tr>
-                {% if record['calculation_note'] and record['usage'] > 0 %}
-                <tr class="detail-row">
                     <td colspan="7">
-                        <details>
+                        {% if record['calculation_note'] and record['usage'] > 0 %}
+                        <details class="embedded-details">
                             <summary>查看计算详情</summary>
                             <pre>{{ record['calculation_note'] }}</pre>
                         </details>
+                        {% endif %}
                     </td>
                 </tr>
-                {% endif %}
-                {% endfor %}
             </tbody>
+            {% endfor %}
         </table>
     </div>
     {% else %}
