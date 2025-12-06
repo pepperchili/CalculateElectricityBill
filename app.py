@@ -143,7 +143,7 @@ def index():
                     note += f"单月计算:\n{monthly_note}\n"
                     note += "-" * 20 + "\n"
                     note += f"506应付: {monthly_cost:.2f}元 × {months_diff}个月 = {user_cost:.2f}元\n"
-                    note += f"607应付: {total_bill:.2f} - {user_cost:.2f} = {neighbor_cost:.2f}元\n"
+                    note += f"507应付: {total_bill:.2f} - {user_cost:.2f} = {neighbor_cost:.2f}元\n"
                 else:
                     note = "506电费计算:\n"
                     note += monthly_note
@@ -153,7 +153,7 @@ def index():
                         note += f"506应付: {cost_formula} = {user_cost:.2f}元\n"
                     else:
                         note += f"506应付: {user_cost:.2f}元\n"
-                    note += f"607应付: {total_bill:.2f} - {user_cost:.2f} = {neighbor_cost:.2f}元\n"
+                    note += f"507应付: {total_bill:.2f} - {user_cost:.2f} = {neighbor_cost:.2f}元\n"
 
             conn.execute('INSERT INTO records (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, calculation_note) VALUES (?, ?, ?, ?, ?, ?, ?)',
                          (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, note))
