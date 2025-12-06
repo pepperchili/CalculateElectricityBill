@@ -146,7 +146,16 @@ def index():
             conn.commit()
             return redirect(url_for('index'))
 
-    records = conn.execute('SELECT * FROM records ORDER BY billing_month DESC, id DESC').fetchall()
+    records_data = conn.execute('SELECT * FROM records ORDER BY billing_month DESC, id DESC').fetchall()
+    
+    # Convert to list of dicts to modify
+    records = []
+    for row in records_data:
+        r = dict(row)
+        # Calculate previous reading: current reading - usage
+        # Use round to avoid floating point errors
+        r['prev_reading'] = round(r['meter_reading'] - r['usage'], 2)
+        records.append(r)
     
     # Find the latest reading to display as "Previous Reading" for the form
     latest = records[0] if records else None

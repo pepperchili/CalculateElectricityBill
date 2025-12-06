@@ -38,12 +38,12 @@
             <thead>
                 <tr>
                     <th>月份</th>
-                    <th>电表读数</th>
+                    <th>上月读数</th>
+                    <th>本月读数</th>
                     <th>用电量</th>
                     <th>总电费</th>
                     <th>506应付</th>
                     <th>507应付</th>
-                    <th>操作</th>
                 </tr>
             </thead>
             {% for record in records %}
@@ -56,7 +56,8 @@
                             <button type="submit" class="btn-delete-x" aria-label="删除">&times;</button>
                         </form>
                     </td>
-                    <td data-label="电表读数">{{ record['meter_reading'] }}度</td>
+                    <td data-label="上月读数">{{ record['prev_reading'] }}度</td>
+                    <td data-label="本月读数">{{ record['meter_reading'] }}度</td>
                     <td data-label="用电量">
                         {% if record['usage'] == 0 %}
                         <span class="badge-neutral">初始</span>
