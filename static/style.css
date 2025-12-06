@@ -1,31 +1,26 @@
 :root {
-    /* Unified Color Palette (Indigo & Slate) */
-    --primary-50: #eef2ff;
-    --primary-100: #e0e7ff;
-    --primary-500: #6366f1;
-    --primary-600: #4f46e5;
-    --primary-700: #4338ca;
-
-    --slate-50: #f8fafc;
-    --slate-100: #f1f5f9;
-    --slate-200: #e2e8f0;
-    --slate-300: #cbd5e1;
-    --slate-500: #64748b;
-    --slate-700: #334155;
-    --slate-800: #1e293b;
-    --slate-900: #0f172a;
-
-    --success-color: #10b981;
-    --danger-color: #ef4444;
-
-    /* Semantic Variables */
-    --bg-color: var(--slate-50);
+    /* MUJI / Japanese Minimalist Palette */
+    --bg-color: #f4f4f0;
+    /* Warm off-white background */
     --card-bg: #ffffff;
-    --text-main: var(--slate-800);
-    --text-muted: var(--slate-500);
-    --border-color: var(--slate-200);
-    --primary-color: var(--primary-600);
-    --focus-ring: rgba(99, 102, 241, 0.2);
+    --text-main: #333333;
+    /* Charcoal */
+    --text-muted: #888888;
+    /* Soft gray */
+    --border-color: #e0e0e0;
+    /* Thin, light borders */
+
+    /* Accents - Subtle and Natural */
+    --primary-color: #333333;
+    /* Black/Charcoal for primary actions */
+    --primary-hover: #555555;
+    --accent-color: #a0a090;
+    /* Muted olive/beige for highlights */
+
+    --danger-color: #d32f2f;
+    /* Standard red for delete, but kept minimal */
+
+    --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
 
 * {
@@ -34,7 +29,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-family);
     background-color: var(--bg-color);
     color: var(--text-main);
     margin: 0;
@@ -44,52 +39,54 @@ body {
 }
 
 .container {
-    max-width: 700px;
-    /* Slightly narrower for better readability */
+    max-width: 600px;
+    /* Narrower for a receipt-like feel */
     margin: 0 auto;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
 }
 
 /* Header */
 header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
     padding-top: 20px;
 }
 
 h1 {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
+    /* Lighter weight */
     margin: 0 0 8px 0;
-    color: var(--slate-900);
-    letter-spacing: -0.025em;
+    color: var(--text-main);
+    letter-spacing: 0.05em;
 }
 
 .subtitle {
     color: var(--text-muted);
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 400;
 }
 
 /* Cards */
 .card {
     background: var(--card-bg);
-    border-radius: 20px;
-    /* Softer corners */
-    padding: 32px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    border-radius: 4px;
+    /* Minimal rounding */
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    /* Very subtle shadow */
     margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border-color);
 }
 
 h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 24px 0;
-    color: var(--slate-800);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0 20px 0;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    letter-spacing: 0.05em;
 }
 
 /* Forms */
@@ -99,7 +96,7 @@ h2 {
 
 .form-row {
     display: flex;
-    gap: 20px;
+    gap: 16px;
 }
 
 .form-row .form-group {
@@ -108,394 +105,245 @@ h2 {
 
 label {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: var(--slate-700);
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--text-muted);
 }
 
 input {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    padding: 10px 0;
+    /* Underline style */
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
     font-size: 1rem;
-    color: var(--slate-900);
-    background-color: #fff;
-    transition: all 0.2s ease;
+    color: var(--text-main);
+    background-color: transparent;
+    transition: border-color 0.2s;
     appearance: none;
-    /* Remove default styling */
 }
 
 input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px var(--focus-ring);
+    border-bottom-color: var(--primary-color);
 }
 
 input::placeholder {
-    color: var(--slate-300);
+    color: #ccc;
 }
 
 .disabled-input {
-    background-color: var(--slate-50);
     color: var(--text-muted);
-    cursor: not-allowed;
+    background-color: transparent;
 }
 
 /* Buttons */
 .btn-primary {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: 2px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
-}
-
-.btn-primary:active {
-    transform: translateY(1px);
-    box-shadow: none;
+    transition: background-color 0.2s;
+    letter-spacing: 0.05em;
+    margin-top: 10px;
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-700);
+    background-color: var(--primary-hover);
 }
 
-/* Table / List */
+/* History List (Receipt Style) */
 .table-wrapper {
-    overflow: hidden;
-    /* Hide overflow for rounded corners */
-    background: var(--card-bg);
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
+    background: transparent;
+    border: none;
 }
 
 table {
+    display: block;
+    /* Force block layout to prevent table width quirks */
     width: 100%;
     border-collapse: collapse;
 }
 
-th {
-    background-color: var(--slate-50);
-    color: var(--text-muted);
+thead {
+    display: none;
+    /* Hide header for cleaner look */
+}
+
+tbody.record-group {
+    display: block;
+    background: var(--card-bg);
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+tr {
+    display: block;
+}
+
+/* Header Row: Month + Delete */
+td[data-label="月份"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+    /* Dashed line like a receipt */
+    margin-bottom: 16px;
+}
+
+.month-title {
+    font-size: 1.2rem;
     font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 16px 24px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-family: "Courier New", Courier, monospace;
+    /* Monospace for numbers/dates looks technical/receipt-like */
+    letter-spacing: -0.02em;
 }
 
-td {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--slate-700);
-    font-size: 0.95rem;
+.delete-form {
+    margin: 0;
 }
 
-tr:last-child td {
-    border-bottom: none;
-}
-
-/* Highlights */
-.highlight-user {
-    color: var(--primary-600);
-    font-weight: 600;
-    background-color: var(--primary-50);
-    padding: 4px 8px;
-    border-radius: 6px;
-    margin-top: 7px;
-    margin-bottom: 13px;
-}
-
-.highlight-neighbor {
-    color: var(--primary-600);
-    font-weight: 600;
-    background-color: var(--primary-50);
-    padding: 4px 8px;
-    border-radius: 6px;
-}
-
-.badge-neutral {
-    background-color: var(--slate-100);
-    color: var(--text-muted);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-/* Actions */
-.btn-icon {
+.btn-delete-x {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
     background: transparent;
-    border: none;
+    color: #ccc;
+    border: 1px solid #eee;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-size: 0.82rem;
-    padding: 6px 12px;
-    border-radius: 6px;
-    color: var(--text-muted);
     transition: all 0.2s;
-    background-color: var(--slate-100);
 }
 
-.btn-icon:hover {
-    background-color: #fee2e2;
+.btn-delete-x:hover {
     color: var(--danger-color);
+    border-color: var(--danger-color);
 }
 
-/* Details */
-details {
+/* Data Rows */
+td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border: none;
+    /* Remove default borders */
+}
+
+td::before {
+    content: attr(data-label);
+    color: #999;
+}
+
+/* Highlighted Costs */
+td[data-label="506应付"] {
     margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    font-weight: 600;
 }
 
-summary {
+td[data-label="507应付"] {
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+td[data-label="506应付"]::before,
+td[data-label="507应付"]::before {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+/* Specific styling for the amounts */
+.highlight-user,
+.highlight-neighbor {
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: -0.05em;
+}
+
+/* Details Section */
+td[colspan="7"] {
+    display: block;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.embedded-details {
+    width: 100%;
+}
+
+.embedded-details summary {
+    font-size: 0.8rem;
+    color: #999;
     cursor: pointer;
-    color: var(--primary-600);
-    font-size: 0.875rem;
-    font-weight: 500;
-    user-select: none;
-    transition: color 0.2s;
+    list-style: none;
+    /* Hide default triangle if desired, or keep it */
+    text-align: right;
 }
 
-summary:hover {
-    color: var(--primary-700);
+.embedded-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.embedded-details summary::after {
+    content: " ▾";
+}
+
+.embedded-details[open] summary::after {
+    content: " ▴";
 }
 
 pre {
-    background-color: var(--slate-50);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 12px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    color: #666;
     margin-top: 8px;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 0.8rem;
-    color: var(--slate-700);
+    border: none;
+    font-family: "Courier New", Courier, monospace;
     white-space: pre-wrap;
+    /* Ensure text wraps */
     word-break: break-all;
+    /* Break long words if necessary */
 }
 
-/* Alerts */
-.alerts {
-    margin-bottom: 24px;
-}
-
-.alert {
-    background-color: #fef2f2;
-    color: #991b1b;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #fecaca;
-    font-size: 0.9rem;
-}
-
-/* Mobile Optimization */
+/* Mobile adjustments */
 @media (max-width: 600px) {
-    body {
-        padding: 16px 12px;
-    }
-
     .container {
-        padding-bottom: 80px;
-    }
-
-    h1 {
-        font-size: 1.75rem;
+        padding: 10px;
     }
 
     .card {
         padding: 20px;
-        border-radius: 16px;
     }
 
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    /* Mobile Cards for History */
-    .table-wrapper {
-        background: transparent;
-        border: none;
-        border-radius: 0;
-    }
-
-    thead {
-        display: none;
-    }
-
-    /* The Card Unit (tbody) */
-    tbody.record-group {
-        display: block;
-        background: var(--card-bg);
-        margin-bottom: 20px;
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--border-color);
-        overflow: hidden;
-    }
-
-    tr {
-        display: block;
-        padding: 16px;
-        border-bottom: none;
-        position: relative;
-        /* For absolute positioning of delete button */
-    }
-
-    tr:last-child {
-        border-bottom: none;
-    }
-
-    td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px dashed var(--slate-200);
-    }
-
-    td:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-        justify-content: flex-end;
-    }
-
-    td::before {
-        content: attr(data-label);
-        font-weight: 500;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-    }
-
-    /* Special handling for delete button: Bottom Right */
-    /* Header Cell (Month + Delete) */
-    td[data-label="操作"] {
-        position: static;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--slate-100);
-    }
-
-    .month-title {
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: var(--slate-900);
-        white-space: nowrap;
-        /* Prevent wrapping */
-    }
-
-    /* Position the delete form */
-    .delete-form {
-        position: static;
-        /* Reset absolute, use flex */
-        margin: 0;
-    }
-
-    .btn-delete-x {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background-color: var(--slate-100);
-        color: var(--text-muted);
-        border: none;
-        font-size: 20px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        padding-bottom: 2px;
-        /* Visual adjustment for &times; alignment */
-    }
-
-    .btn-delete-x:hover {
-        background-color: var(--danger-color);
-        color: white;
-    }
-
-    td[data-label="操作"]::before {
-        display: none;
-    }
-
-    td[data-label="操作"] form {
-        margin: 0;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    td[data-label="操作"] .btn-icon {
-        background-color: var(--slate-50);
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        padding: 8px 16px;
-        border: 1px solid var(--border-color);
-        width: auto;
-        /* Auto width */
-    }
-
-    td[data-label="操作"] .btn-icon:hover {
-        background-color: var(--danger-color);
-        color: white;
-        border-color: var(--danger-color);
-    }
-
-    /* Embedded Details */
-    .embedded-details {
-        width: 100%;
-        margin-top: 8px;
-        text-align: left;
-    }
-
-    .embedded-details summary {
-        text-align: left;
-        padding: 8px 0;
-        color: #4e46e5;
-        font-size: 0.85rem;
-    }
-
-
-    /* Inputs */
+    /* Ensure inputs don't zoom */
     input {
         font-size: 16px;
-        /* Prevent iOS zoom */
-    }
-
-    input[type="month"],
-    input[type="date"] {
-        -webkit-appearance: none;
-        appearance: none;
-        background-color: #fff;
-        min-height: 45px;
-        /* Better touch target */
-    }
-
-    /* Details */
-    details {
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px dashed var(--slate-200);
-    }
-
-    summary {
-        padding: 4px 0;
-        font-size: 0.85rem;
-    }
-
-    pre {
-        margin-top: 8px;
-        padding: 10px;
-        background-color: var(--slate-50);
-        border: none;
     }
 }

@@ -49,15 +49,15 @@
             {% for record in records %}
             <tbody class="record-group">
                 <tr>
-                    <td data-label="操作" class="header-cell">
+                    <td data-label="月份" class="header-cell">
                         <span class="month-title">{{ record['billing_month'] }}</span>
                         <form action="{{ url_for('delete', id=record['id']) }}" method="post"
                             onsubmit="return confirm('确定删除吗？');" class="delete-form">
                             <button type="submit" class="btn-delete-x" aria-label="删除">&times;</button>
                         </form>
                     </td>
-                    <td data-label="上月读数">{{ record['prev_reading'] }}度</td>
                     <td data-label="本月读数">{{ record['meter_reading'] }}度</td>
+                    <td data-label="上月读数">{{ record['prev_reading'] }}度</td>
                     <td data-label="用电量">
                         {% if record['usage'] == 0 %}
                         <span class="badge-neutral">初始</span>
