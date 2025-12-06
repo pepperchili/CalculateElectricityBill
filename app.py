@@ -49,6 +49,7 @@ def calculate_tier_cost(usage, month_str):
 
     cost = 0
     breakdown = []
+    tier_costs = []
     breakdown.append(f"季节: {season_name}, 档位减半执行")
 
     remaining = usage
@@ -57,6 +58,7 @@ def calculate_tier_cost(usage, month_str):
     t1_usage = min(remaining, t1_limit)
     t1_cost = t1_usage * p1
     cost += t1_cost
+    tier_costs.append(t1_cost)
     breakdown.append(f"第一档(0-{t1_limit}): {t1_usage:.2f}度 × {p1} = {t1_cost:.2f}元")
     remaining -= t1_usage
 
@@ -67,6 +69,7 @@ def calculate_tier_cost(usage, month_str):
         t2_usage = min(remaining, t2_span)
         t2_cost = t2_usage * p2
         cost += t2_cost
+        tier_costs.append(t2_cost)
         breakdown.append(f"第二档({t1_limit}-{t2_limit}): {t2_usage:.2f}度 × {p2} = {t2_cost:.2f}元")
         remaining -= t2_usage
 
@@ -74,9 +77,10 @@ def calculate_tier_cost(usage, month_str):
     if remaining > 0:
         t3_cost = remaining * p3
         cost += t3_cost
+        tier_costs.append(t3_cost)
         breakdown.append(f"第三档(>{t2_limit}): {remaining:.2f}度 × {p3} = {t3_cost:.2f}元")
 
-    return cost, "\n".join(breakdown)
+    return cost, "\n".join(breakdown), tier_costs
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
@@ -126,7 +130,7 @@ def index():
                 # Calculate cost for ONE month based on average usage
                 # Note: This assumes the season standard of the CURRENT month applies to the whole period
                 # or we could try to be fancy and calculate per month, but user asked for "usage/2" logic.
-                monthly_cost, monthly_note = calculate_tier_cost(avg_usage, billing_month)
+                monthly_cost, monthly_note, tier_costs = calculate_tier_cost(avg_usage, billing_month)
                 
                 user_cost = monthly_cost * months_diff
                 neighbor_cost = total_bill - user_cost
@@ -135,11 +139,21 @@ def index():
                     note = f"跨度 {months_diff} 个月 (上次抄表: {prev_month_str})\n"
                     note += f"总用量 {usage:.2f} ÷ {months_diff} = 平均每月 {avg_usage:.2f} 度\n"
                     note += "-" * 20 + "\n"
+                    note += "506电费计算:\n"
                     note += f"单月计算:\n{monthly_note}\n"
                     note += "-" * 20 + "\n"
-                    note += f"总费用: {monthly_cost:.2f}元 × {months_diff}个月 = {user_cost:.2f}元"
+                    note += f"506应付: {monthly_cost:.2f}元 × {months_diff}个月 = {user_cost:.2f}元\n"
+                    note += f"607应付: {total_bill:.2f}元 - {user_cost:.2f}元 = {neighbor_cost:.2f}元\n"
                 else:
-                    note = monthly_note
+                    note = "506电费计算:\n"
+                    note += monthly_note
+                    note += "\n" + "-" * 20 + "\n"
+                    cost_formula = " + ".join([f"{c:.2f}" for c in tier_costs])
+                    if len(tier_costs) > 1:
+                        note += f"506应付: {cost_formula} = {user_cost:.2f}元\n"
+                    else:
+                        note += f"506应付: {user_cost:.2f}元\n"
+                    note += f"607应付: {total_bill:.2f} - {user_cost:.2f} = {neighbor_cost:.2f}元\n"
 
             conn.execute('INSERT INTO records (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, calculation_note) VALUES (?, ?, ?, ?, ?, ?, ?)',
                          (billing_month, meter_reading, total_bill, usage, user_cost, neighbor_cost, note))
